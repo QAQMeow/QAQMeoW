@@ -11,7 +11,7 @@ TREE CreatTree()
 {
 	TREE T;
 	T= (TREE)malloc(sizeof(node));
-	char data[MAX];
+	char data[MAX];                      //输入字符串，若不等于“#”，则转换为int型
 	printf("请输入数据(#为空)：\n");
 	scanf("%s",data);
 	getchar();
