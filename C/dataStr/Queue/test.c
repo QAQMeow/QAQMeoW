@@ -18,6 +18,10 @@ int main()
 	printf("删除栈\n");
 	DelQueue(&Q);
 	PrintQueue(&Q);
+
+	for(int i = 1;i<=5;i++)
+	InQueue(&Q);
+PrintQueue(&Q);
 	return 0;
 }
 

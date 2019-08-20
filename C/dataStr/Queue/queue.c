@@ -43,6 +43,7 @@ void OutQueue(Queue* Q)
 	else if(Q->Exit->pre == NULL)
 	{
 		printf("出栈数据：%d\n",Q->Exit->data);
+		Q->Entrance = Q->Exit->pre;
 		Q->Exit = Q->Exit->pre;
 		
 	}	

@@ -155,10 +155,113 @@ void PrintTree_c1(TREE T)
 
 }
 
+//层序遍历
+// 初始化一个队列，先将根节点入队，然后出队，访问该结点，若有左子树，则将左子树入队，若有右子树，将右子树入队，然后出队，对出队节点访问
+	typedef struct Queue
+		{
+			struct Node* Entrance;
+			struct Node* Exit;	
+		}Queue;
+
+	
+	typedef struct Node
+	{
+		node* DATA;
+		struct Node* pre;
+		struct Node* next;
+	}Node;
+
+	Queue IniQueue()
+	{
+		Queue Q;
+		Q.Entrance =NULL;
+		Q.Exit = NULL;
+		return Q;
+	}
+	//Add 
+	void InQueue(Queue* Q,node* T)
+	{
+		Node* node = (Node*)malloc(sizeof(Node));
+		node->pre = NULL;
+		node->DATA = T;
+		if(Q->Entrance == NULL)
+		{	node->next = Q->Entrance;
+			Q->Entrance = node;
+			Q->Exit = node;	
+			
+		}
+		else
+		{	Q->Entrance->pre = node;
+			node->next = Q->Entrance;
+			Q->Entrance = node;
+					
+		}
+
+	}
+
+	//out
+	node* OutQueue(Queue* Q)
+	{
+		node* N = (node*)malloc(sizeof(node));
+		
+		if(Q->Exit== NULL)
+		{
+			printf("Queue is Empty,Use method :InQueue(Queue* queue) to add an Item\n");
+			return NULL;
+		}
+		else if(Q->Exit->pre == NULL)
+		{
+			
+			N =  Q->Exit->DATA;
+			//printf("%d ",Q->Exit->DATA->data);
+			
+			Q->Entrance = Q->Exit->pre;
+			Q->Exit = Q->Exit->pre;
+		}	
+		else 
+		{	
+			N = Q->Exit->DATA;
+			//printf("%d ",Q->Exit->DATA->data);
+			Q->Exit->pre->next = Q->Exit->next;
+			Q->Exit = Q->Exit->pre;
+
+		}
+		return N;
+	}
+
+	//IsQueueEmpty
+	int IsQEmpty(Queue* Q)
+	{
+		return Q->Entrance == NULL;
+
+	}
 
 
+void PrintTree_c(TREE T)
+{
+	node* Node  = (node*)malloc(sizeof(node));
+	Queue Q = IniQueue();
+	Queue* q = &Q;
+	Node = T;
 
+	InQueue(&Q,Node);
+	while(!IsQEmpty(&Q))
+	{
+		
+		Node = OutQueue(&Q);
+		printf("%d ",Node->data);
+		if(Node->left != NULL)
+		{
+			InQueue(&Q,Node->left);
+		}
+		if(Node->right != NULL)
+		{
+			InQueue(&Q,Node->right);
+		}
+		
+	}
 
+}
 
 
 
