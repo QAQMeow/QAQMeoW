@@ -12,5 +12,7 @@ int main()
 	BubbleSort(A);
 	printf("快速排序：\n");
 	QuickSort(A);
+	printf("简单选择排序：\n");
+	SimpleSelectionSort(A);
 	return 0;
 }

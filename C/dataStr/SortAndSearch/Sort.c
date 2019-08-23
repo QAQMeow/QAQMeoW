@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include"SortAndSearch.h"
 
-int A[20] = {10,3,11,7,9,1,6,4,5,8,19,15,2,12,16,13,14,17,18,20};
+int A[20] = {10,3,11,7,19,1,6,14,5,18,9,15,2,12,16,13,4,17,8,20};
 int LEN =  sizeof(A)/sizeof(int);	
 
 //输出数组
@@ -101,48 +101,81 @@ void BubbleSort(int ARRAY[])
 }
 
 //快速排序
+/*
+选取第一个为参考值，将序列分为比该值小和比该值大两序列，再对这两序列进行同样的操作
+*/
 void QuickSort(int ARRAY[])
 { 	
 	int B[LEN];
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
-	int left = 1;
+	int left = 0;
 	int right = LEN - 1;
-	int T = B[0];
-	int lp,rp;
+	int T = B[left];
 	int k;
-	while(left <right)
-	{	
-		if(B[left] < T)
-		{
-		 	left++;
-		
-		
-		}
-		if(B[right] > T)
-		{
-			
-			
-			right--;
-			
-		}	
-		k = B[left];
-		B[left] = B[right];
-		B[right] = k;	
+	int nright,nleft;
+	void sort(int left,int right,int T)
+	{
+		int i = 0,j = 0;		//记录移动增量，方便计算下一次排序序列位置，可只用一个变量记录
+		while(left <right)
+		{	
 
+			if(B[left] < T)
+			{
+			 	left++;
+			 	i++;
+			}
+			if(B[right] > T)
+			{
+				right--;
+				j++;
+			}	
+			k = B[left];
+			B[left] = B[right];
+			B[right] = k;	
+
+			/*	left-i：下一次左边排序序列第一个元素位置
+				left-1：下一次左边排序最后一个元素位置
+				right+1：下一次右边序列排序第一个元素位置
+				right+j：下一次右边排序最后一个元素位置
+			*/
+			sort(left-i,left-1,B[left-i]);
+			sort(right+1,right+j, B[right+1]);
+		}
+		
 	}
-	B[0] = B[left];
-	B[left] = T;
+
+	sort(left,right,B[0]);
+	
 	PrintArray(B);
 }
 
 //简单选择排序
+/*
+
+*/
 void SimpleSelectionSort(int ARRAY[])
 {
 	int B[LEN];
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
+
+	int i,j,t;
+
+	for(i = 0;i<LEN - 1;i++)
+	{
+		for(j = i;j<LEN - 1;j++)
+		{
+			if(B[j] <= B[i])
+			{
+				t = B[j];
+				B[j] = B[i];
+				B[i] = t;
+			}
+		}
+	}
+	PrintArray(B);
 }
 
 //堆排序
