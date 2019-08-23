@@ -1,35 +1,44 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define MAX_SIZE 100
 
-typedef struct node{
-	int data;
-	int level;
-	struct node* left;
-	struct node* right;
-	struct node* pre;
-}node;
+//双亲表示
+typedef struct PTNode{
+	char data;
+	int parent;
+}PTNode;
 
-typedef struct node* TREE;
-// Initialize Tree
-TREE InitTree();
+typedef struct{
+	PTNode nodes[MAX_SIZE];
+	int r,n;
+}PTree;
 
-//Creat Tree
-TREE CreatTree(TREE Tree);
+//孩子表示
+typedef struct CTNode{
+	int child;
+	struct CTNode* next;	
+}CTNode;
 
-//Print Tree //中序遍历
+typedef CTNode* ChildPtr;
 
-void PrintTree(TREE T);
+typedef struct{
+	char data;
+	ChildPtr first;
+}CTbox;
+
+typedef struct{
+	CTbox ndoes[MAX_SIZE];
+	int n,r;
+}CTree;
 
 
-//Search Tree
+//建立双亲表示树
+PTree BuildPTree();
+//建立孩子表示树
+CTree BuildCTree();
 
-void SearchTree(TREE T,int n);
+//输出双亲表示树
+void PrintPTree(PTree Tree);
 
-// Print Tree 层序遍历
-void PrintTree_c(TREE T);
-
-//节点个数
-int NumNode(TREE T);
-void Num(TREE T,int* c);
-// Print Tree 层序遍历
-void PrintTree_c1(TREE T);
+//输出孩子表示树
+void PrintCTree(CTree Tree);

@@ -1,269 +1,43 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"Tree.h"
-#include<string.h>
-#define MAX 15
 
-// Initialize Tree
-TREE InitTree()
+/*
+树结构：
+          R
+       /  |  \
+	  A   B   C
+	 / \     / | \ 
+    D   E   G  H  K
+*/
+
+//建立双亲表示树
+PTree BuildPTree()
 {
-	TREE T;
-	T= (TREE)malloc(sizeof(node));
-	T = NULL;
-	T = CreatTree(T);
-	return T;
-}
-
-//Creat Tree
-int level =1;
-TREE CreatTree(TREE Tree)
-{ 
+	PTree PT;
+	PT.n = 0;	//	节点个数
+	PT.r = 0; 	//	树根位置在0
 	
-	TREE T;
-	T= (TREE)malloc(sizeof(node));
-	char data[MAX];
-	printf("请输入数据(#为空,输入叶节点后须输入两个#)：\n");
-	scanf("%s",data);
-	
-	if(strcmp(data,"#")==0)
-		T = NULL;
-	else
-	{
-		if(Tree == NULL)
-		{
-			T->level = 1;
-			T->pre= NULL;
-		}
-		else
-		{
-			T->pre = Tree;	
-			T->level = Tree->level+1;	
-		}
-		T->data = atoi(data);
-		T->left  = CreatTree(T);
-		T->right = CreatTree(T);	
-	}
+	printf("请输入树根元素:\n");
+	scanf("%c",&PT.nodes[0].data);
 
-	return T;
+	return PT;
+
 }
-
-//Print Tree
-
-void PrintTree(TREE T)
-{
-	if(T==NULL)
-	{
-		return;
-	
-	}
-	else
-	{
-		PrintTree(T->left);
-		printf("  %d    %d \n",T->data,T->level);
-		PrintTree(T->right);		
-	}
-	
-}
-
-//Search Tree
-
-void SearchTree(TREE T,int n)
-{
-	if(T==NULL)
-	{
-		return;	
-	}	
-	else
-	{
-		SearchTree(T->left,n);
-		SearchTree(T->right,n);
-		if(T->data == n)
-			printf("  %d    %d \n",T->data,T->level);
-		else
-			return;
-	}
-}
-
-void Num(TREE T,int* c)
+//建立孩子表示树
+CTree BuildCTree()
 {
 
-	if(T==NULL)
-	{
-		return;
-	
-	}
-	else
-	{
-		Num(T->left,c);
-		*c+=1;
-		Num(T->right,c);		
-	}
-
 }
-//节点个数
-int NumNode(TREE T)
+//输出双亲表示树
+void PrintPTree(PTree Tree)
 {
-	int n =0;
-	Num(T,&n);
-	return n;
-
+	if(Tree.n == 0)
+		printf("树为空\n");
 }
 
-// 层序遍历
-
-void PrintTree_c1(TREE T)
+//输出孩子表示树
+void PrintCTree(CTree Tree)
 {
-	int n = NumNode(T);
-	int* p = (int*)malloc(n*sizeof(int));
-	int* t = p;
-	int* l = p;
-	//*****************************************
-	//计算树的深度
- 	int levelMax = 0;
-	if(T!=NULL){
-		levelMax = T->level;
-		void CacuLevel(TREE T)
-		{
-			if(levelMax<=T->level)	
-			levelMax = T->level;
-			if(T->left!=NULL)
-			CacuLevel(T->left);
-			if(T->right!=NULL)
-			CacuLevel(T->right);	
-		}
-		CacuLevel(T);
-	}
-	//*****************************************
-
-	for(int l = 1;l<=levelMax;l++)
-	{
-		void readdata(TREE T)
-		{
-			if(l==T->level)	
-			{*t  = T->data;
-			t++;}
-			if(T->left!=NULL)
-			readdata(T->left);
-			if(T->right!=NULL)
-			readdata(T->right);	
-		}
-		readdata(T);	
-	}	
-
-	for(int i = 0;i<n;i++)
-		printf("%d ",p[i]);
 
 }
-
-//层序遍历
-// 初始化一个队列，先将根节点入队，然后出队，访问该结点，若有左子树，则将左子树入队，若有右子树，将右子树入队，然后出队，对出队节点访问
-	typedef struct Queue
-		{
-			struct Node* Entrance;
-			struct Node* Exit;	
-		}Queue;
-
-	
-	typedef struct Node
-	{
-		node* DATA;
-		struct Node* pre;
-		struct Node* next;
-	}Node;
-
-	Queue IniQueue()
-	{
-		Queue Q;
-		Q.Entrance =NULL;
-		Q.Exit = NULL;
-		return Q;
-	}
-	//Add 
-	void InQueue(Queue* Q,node* T)
-	{
-		Node* node = (Node*)malloc(sizeof(Node));
-		node->pre = NULL;
-		node->DATA = T;
-		if(Q->Entrance == NULL)
-		{	node->next = Q->Entrance;
-			Q->Entrance = node;
-			Q->Exit = node;	
-			
-		}
-		else
-		{	Q->Entrance->pre = node;
-			node->next = Q->Entrance;
-			Q->Entrance = node;
-					
-		}
-
-	}
-
-	//out
-	node* OutQueue(Queue* Q)
-	{
-		node* N = (node*)malloc(sizeof(node));
-		
-		if(Q->Exit== NULL)
-		{
-			printf("Queue is Empty,Use method :InQueue(Queue* queue) to add an Item\n");
-			return NULL;
-		}
-		else if(Q->Exit->pre == NULL)
-		{
-			
-			N =  Q->Exit->DATA;
-			//printf("%d ",Q->Exit->DATA->data);
-			
-			Q->Entrance = Q->Exit->pre;
-			Q->Exit = Q->Exit->pre;
-		}	
-		else 
-		{	
-			N = Q->Exit->DATA;
-			//printf("%d ",Q->Exit->DATA->data);
-			Q->Exit->pre->next = Q->Exit->next;
-			Q->Exit = Q->Exit->pre;
-
-		}
-		return N;
-	}
-
-	//IsQueueEmpty
-	int IsQEmpty(Queue* Q)
-	{
-		return Q->Entrance == NULL;
-
-	}
-
-
-void PrintTree_c(TREE T)
-{
-	node* Node  = (node*)malloc(sizeof(node));
-	Queue Q = IniQueue();
-	Queue* q = &Q;
-	Node = T;
-
-	InQueue(&Q,Node);
-	while(!IsQEmpty(&Q))
-	{
-		
-		Node = OutQueue(&Q);
-		printf("%d ",Node->data);
-		if(Node->left != NULL)
-		{
-			InQueue(&Q,Node->left);
-		}
-		if(Node->right != NULL)
-		{
-			InQueue(&Q,Node->right);
-		}
-		
-	}
-
-}
-
-
-
-
-
