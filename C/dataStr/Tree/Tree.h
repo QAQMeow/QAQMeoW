@@ -10,24 +10,20 @@ typedef struct PTNode{
 
 typedef struct{
 	PTNode nodes[MAX_SIZE];
-	int r,n;
+	int r,n; //根位置和节点个数
 }PTree;
 
 //孩子表示
-typedef struct CTNode{
-	int child;
-	struct CTNode* next;	
-}CTNode;
-
-typedef CTNode* ChildPtr;
 
 typedef struct{
+	
 	char data;
-	ChildPtr first;
+	int next;
+	int child;
 }CTbox;
 
 typedef struct{
-	CTbox ndoes[MAX_SIZE];
+	CTbox nodes[MAX_SIZE];
 	int n,r;
 }CTree;
 
@@ -42,3 +38,6 @@ void PrintPTree(PTree Tree);
 
 //输出孩子表示树
 void PrintCTree(CTree Tree);
+
+//孩子表示树输出孩子
+void PrintChild(CTree CT,CTbox box);
