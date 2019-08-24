@@ -6,8 +6,8 @@
 树结构：
           R
        /  |  \
-	  A   B   C
-	 / \    / | \ 
+      A   B   C
+     / \    / | \ 
     D   E  G  H  K
 */
 
@@ -23,6 +23,7 @@ PTree BuildPTree()
 	{
 		printf("请输入树根元素(#为空):\n");
 		scanf("%c",&c);
+		getchar();
 		if(c!='#')
 		{
 			PT.nodes[PT.r].data = c;
@@ -39,8 +40,9 @@ PTree BuildPTree()
 			{
 				int j = 0;
 				printf("请输入%c子节点元素(#为空,@添加下一层)：\n",PT.nodes[p].data);
-				getchar();
+				
 				scanf("%c",&c);
+				getchar();
 				if(c != '#')
 				{	
 
@@ -89,7 +91,6 @@ CTree BuildCTree()
 	else
 	{
 		CT.nodes[0].data = c;
-
 		CT.n++;
 	}
 
@@ -97,12 +98,12 @@ CTree BuildCTree()
 	int p = 0;
 	while(CT.nodes[p].data != 0)
 	{
+		int j = i;
 
 		char T;
 		printf("%c 是否有子节点(Y/N)：\n",CT.nodes[p].data);
 		scanf("%c",&T);
 		getchar();
-		
 		if(T !='N')
 		{
 			if(CT.nodes[p].child == -1)
@@ -115,15 +116,16 @@ CTree BuildCTree()
 			getchar();
 			CT.nodes[i].data = c;
 			CT.n++;
-			CT.nodes[i-1].next = i; 
-			
 			i++;
+			CT.nodes[j].next = i; 
+			
+			
 			
 
 		}else
 		{
 			p++;
-			CT.nodes[p].next = -1;
+			CT.nodes[j-1].next = -1;
 		}
 
 	}
@@ -137,7 +139,7 @@ void PrintPTree(PTree Tree)
 		printf("树为空\n");
 	else
 		printf("data  parent\n");
-		for(int i = 0;i<Tree.n+2;i++)
+		for(int i = 0;i<Tree.n;i++)
 		printf(" %c       %d \n",Tree.nodes[i].data,Tree.nodes[i].parent);
 }
 
@@ -146,14 +148,16 @@ void PrintCTree(CTree Tree)
 {
 
 	for(int i = 0;i < Tree.n;i++)
-	printf("|%d| ",Tree.nodes[i].next);
+	printf("%c ",Tree.nodes[i].data);
 }
 
 //孩子表示树输出孩子
 void PrintChild(CTree CT,CTbox box)
 {
 	int T = box.child;
-	
+	if(T == -1)
+		printf("%c 节点无子节点\n",box.data);
+	printf("%c 节点的子节点有： ",box.data);
 	while(T != -1)
 		{
 			printf("%c ",CT.nodes[T].data);
