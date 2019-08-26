@@ -35,5 +35,4 @@ void Num(TREE T,int* c);
 void PrintTree_c1(TREE T);
 
 //赫夫曼(Huffman)树(最优二叉树)
-
-void HuffmanTree(TREE T);
+void HuffmanTree();

@@ -3,7 +3,7 @@
 #include"Tree.h"
 #include<string.h>
 #define MAX 15
-
+#define STRINGLENGTH 100
 // Initialize Tree
 TREE InitTree()
 {
@@ -265,5 +265,82 @@ void PrintTree_c(TREE T)
 
 
 
+//赫夫曼(Huffman)树(最优二叉树)
+void HuffmanTree()
+{
+	printf("请输入字符串：\n");
+	char S[STRINGLENGTH];
+	scanf("%s",S);
 
+	int Slen = strlen(S);
 
+	
+
+	typedef struct HTNode{
+		
+		char C;
+		int weight;
+		struct HTNode* left;
+		struct HTNode* right;
+
+	}HTNode;
+
+	typedef HTNode* HT;
+
+	HT Str = (HTNode*)malloc(sizeof(HTNode));
+	int n = 0;	// 记录不同的字符总个数
+	for(int i = 0;i < Slen;i++)
+	{
+		int j = 0;
+		for(j; j <n;j++)
+		{
+			if(S[i] == Str[j].C)
+			{
+				Str[j].weight++;
+				break;
+			}
+		}
+		if(j == n)
+		{
+			Str[j].C = S[i];
+			Str[j].weight++;
+			n++;
+		}
+			
+	}
+	
+	
+	//根据权重从小到大排序
+	for(int i  = 0;i < n - 1;i++)
+	{
+		for(int j = 0;j < n-1-i;j++)
+		{
+			if(Str[j].weight >= Str[j+1].weight)
+			{
+				HTNode T;
+	
+				T.C = Str[j].C;
+				T.weight = Str[j].weight;
+				T.left = Str[j].left;
+				T.right = Str[j].right;
+
+				Str[j].C = Str[j+1].C;
+				Str[j].weight = Str[j+1].weight;
+				Str[j].left = Str[j+1].left;
+				Str[j].right = Str[j+1].right;
+
+				Str[j+1].C = T.C;
+				Str[j+1].weight = T.weight;
+				Str[j+1].left = T.left;
+				Str[j+1].right = T.right;
+			}
+		}
+	}
+	
+	printf("字符 权重(个数)\n");
+	for(int i = 0;i < n;i++)
+	printf(" %c     %d\n",Str[i].C,Str[i].weight);
+		
+}
+
+ 
