@@ -280,12 +280,13 @@ void HuffmanTree()
 		
 		char C;
 		int weight;
+		int code;
 		struct HTNode* left;
 		struct HTNode* right;
 
 	}HTNode;
 
-	typedef HTNode* HT;
+	typedef struct HTNode* HT;
 
 	HT Str = (HTNode*)malloc(sizeof(HTNode));
 	int n = 0;	// 记录不同的字符总个数
@@ -340,7 +341,90 @@ void HuffmanTree()
 	printf("字符 权重(个数)\n");
 	for(int i = 0;i < n;i++)
 	printf(" %c     %d\n",Str[i].C,Str[i].weight);
+	
+	// typedef struct nodes
+	// {
+	// 	int data;
+	// 	char c;
+	// 	struct nodes* left;
+	// 	struct nodes* right;
 		
+	// }nodes;
+	// typedef struct nodes* TRee;
+
+	HT Ss = Str;
+	for(int i = 0;i<n;i++)
+	{
+
+	
+		Ss->right = NULL;
+		Ss->left = NULL;
+		Ss++;
+	}
+
+	HT CT(){
+		if(n==1){
+			HT Hft = (HTNode*)malloc(sizeof(HTNode));
+	
+			Str[0].code = 1;
+
+			Hft->left = Str;
+			Hft->right = NULL;
+			return Hft;
+		}
+		else if(n==2){
+			HT Hft = (HTNode*)malloc(sizeof(HTNode));
+			HT Tc = (HTNode*)malloc(sizeof(HTNode));
+			Str[0].code = 0;
+			Str[1].code = 1;
+			Tc->left = Str+1;
+			Tc->right = Str;
+			Hft++; 
+			Hft = Tc;	
+			return Hft;
+		}
+		else if(n> 2){
+			HT Hft = (HTNode*)malloc(n*sizeof(HTNode));
+			HT Tc = (HTNode*)malloc(sizeof(HTNode));
+			Str[0].code = 0;
+			Str[1].code = 1;
+			Tc->left = Str+1;
+			Tc->right = Str;
+			Hft++; 
+			Hft = Tc;
+
+			for(int i = 2;i<n;i++)
+			{	
+				HT T = (HTNode*)malloc(sizeof(HTNode));
+				Str[i].code = 1;
+				T->left = Str+i;
+				T->right = Hft;
+				T->code = 0;
+				Hft++; 
+				Hft = T;	
+			}
+
+			return Hft;
+		}
+		else return NULL;
+	}
+	HT HFT = CT();
+	// 	printf("|%c| %d\n",HFT->left->C,HFT->left->code);
+	// 	printf("|%c| %d\n",HFT->right->left->C,HFT->right->left->code);
+	// 	printf("|%c| %d\n",HFT->right->right->C,HFT->right->right->code);
+	// // int k =1;
+	void printHFT(HT HL)
+	{
+		if(HL != NULL)
+		{	
+			printf("%d",HL->code);
+			printHFT(HL->left);
+			printHFT(HL->right);
+		}
+
+		// k++;
+	}
+	printHFT(HFT);
 }
 
  
