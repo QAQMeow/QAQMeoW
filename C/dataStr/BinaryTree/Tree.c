@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include"Tree.h"
 #include<string.h>
+#include <stdbool.h>
 #define MAX 15
 #define STRINGLENGTH 100
 // Initialize Tree
@@ -274,19 +275,87 @@ void HuffmanTree()
 
 	int Slen = strlen(S);
 
-	
+//建一个队列储存字符的Huffman码
+	typedef struct Box
+	{
+		int code;
+		struct Box* pre;
+		struct Box* next;
+	}Box;
 
+	typedef struct Box* B;
+
+	typedef struct LINE
+	{
+		struct Box* exit;
+		struct Box* enter;
+	
+	}LINE;
+	typedef struct LINE* LN;
+
+
+	LINE readL(LINE L,int x)
+	{
+		if(L.enter == NULL)
+		{
+			//printf("ERROR1 ");
+		//	L = (LINE*)malloc(sizeof(LINE));
+			B b =(Box*)malloc(sizeof(Box));
+			b->next = NULL;
+			b->pre = NULL;
+			b->code = x;
+			L.exit  = b;
+			L.enter = b;
+		return L;
+		}
+			else
+		{
+			B NT = (Box*)malloc(sizeof(Box));
+			NT->code = x;
+			NT->next = NULL;
+			L.enter->next = NT;
+			NT->pre = L.enter;
+			L.enter = NT;
+		return L;
+		}
+	}
+	void printL(LINE L) 
+	{
+		if(L.enter != NULL)
+		{
+			B b = L.enter;
+	
+			while(b != NULL)
+			{
+				printf("%d",b->code);
+				b = b->pre;
+			}
+			
+		//printf(" ");
+		
+		}
+			else if(L.exit == NULL)
+
+			printf(" ");
+		
+	}
+//-------------------------------------------------------
 	typedef struct HTNode{
 		
 		char C;
 		int weight;
-		int code;
+
+		int position;  //相对父节点位置 左为1 右为0
+		LINE Code;
 		struct HTNode* left;
 		struct HTNode* right;
 
 	}HTNode;
 
 	typedef struct HTNode* HT;
+
+
+
 
 	HT Str = (HTNode*)malloc(sizeof(HTNode));
 	int n = 0;	// 记录不同的字符总个数
@@ -342,66 +411,101 @@ void HuffmanTree()
 	for(int i = 0;i < n;i++)
 	printf(" %c     %d\n",Str[i].C,Str[i].weight);
 	
-	// typedef struct nodes
-	// {
-	// 	int data;
-	// 	char c;
-	// 	struct nodes* left;
-	// 	struct nodes* right;
-		
-	// }nodes;
-	// typedef struct nodes* TRee;
 
 	HT Ss = Str;
 	for(int i = 0;i<n;i++)
 	{
 
-	
 		Ss->right = NULL;
 		Ss->left = NULL;
+
 		Ss++;
 	}
 
+printf("\n");
 	HT CT(){
+		
+		void IntoNode(HT HL,int n)
+	{
+		if(HL != NULL)
+		{	
+
+			HL->Code = readL(HL->Code,n);
+			IntoNode(HL->left,n);
+			IntoNode(HL->right,n);
+			
+		}
+	}
+
 		if(n==1){
 			HT Hft = (HTNode*)malloc(sizeof(HTNode));
 	
-			Str[0].code = 1;
-
-			Hft->left = Str;
+			Str[0].position = 1;
+		
+		
 			Hft->right = NULL;
+			Hft->left = Str;
+		
+			IntoNode(Hft,1);
 			return Hft;
 		}
 		else if(n==2){
-			HT Hft = (HTNode*)malloc(sizeof(HTNode));
+			HT Hft = (HTNode*)malloc(n*sizeof(HTNode));
 			HT Tc = (HTNode*)malloc(sizeof(HTNode));
-			Str[0].code = 0;
-			Str[1].code = 1;
-			Tc->left = Str+1;
-			Tc->right = Str;
-			Hft++; 
+			Str[0].position = 1;
+			Str[1].position = 0;
+			Tc->left = Str;
+			IntoNode(Tc->left,1);
+			
+			Tc->right = Str+1;
+			Hft++;
+			IntoNode(Tc->right,0); 
+		
 			Hft = Tc;	
+
 			return Hft;
+		
 		}
 		else if(n> 2){
 			HT Hft = (HTNode*)malloc(n*sizeof(HTNode));
 			HT Tc = (HTNode*)malloc(sizeof(HTNode));
-			Str[0].code = 0;
-			Str[1].code = 1;
-			Tc->left = Str+1;
-			Tc->right = Str;
-			Hft++; 
+			Str[0].position = 1;
+			Str[1].position = 0;
+			Tc->left = Str;
+				IntoNode(Tc->left,1);
+			Tc->right = Str+1;
+				IntoNode(Tc->right,0);
+			Tc->weight = Str[0].weight+Str[1].weight;
+			Hft++;
 			Hft = Tc;
 
 			for(int i = 2;i<n;i++)
 			{	
 				HT T = (HTNode*)malloc(sizeof(HTNode));
-				Str[i].code = 1;
-				T->left = Str+i;
-				T->right = Hft;
-				T->code = 0;
-				Hft++; 
+				
+				if(Hft->weight <= Str[i].weight)
+					{	
+						Hft->position = 1;
+						Str[i].position = 0; 
+						T->left= Hft;
+						IntoNode(T->left,1);
+						T->right = Str+i;
+						IntoNode(T->right,0);
+					}
+				else	
+					{
+						Hft->position = 0;
+						Str[i].position = 1;
+						T->left = Str+i;
+						IntoNode(T->left,1);
+						T->right = Hft;
+						IntoNode(T->right,0);
+					}
+					T->weight = Str[i].weight+Hft->weight;
+				
+				Hft++;
 				Hft = T;	
+
 			}
 
 			return Hft;
@@ -409,22 +513,46 @@ void HuffmanTree()
 		else return NULL;
 	}
 	HT HFT = CT();
-	// 	printf("|%c| %d\n",HFT->left->C,HFT->left->code);
-	// 	printf("|%c| %d\n",HFT->right->left->C,HFT->right->left->code);
-	// 	printf("|%c| %d\n",HFT->right->right->C,HFT->right->right->code);
-	// // int k =1;
-	void printHFT(HT HL)
-	{
-		if(HL != NULL)
-		{	
-			printf("%d",HL->code);
-			printHFT(HL->left);
-			printHFT(HL->right);
-		}
 
-		// k++;
+	// void printHFT(HT HL)
+	// {
+	// 	if(HL != NULL)
+	// 	{	
+	// 		//printf("%d -- %c\n",HL->weight,HL->C);
+	// 		//if(HL->IsL == 1)
+	// 		 printf("%c   ",HL->C);
+	// 		printL(HL->Code);
+	// 		 printf("\n");
+	// 		 printHFT(HL->left);
+	// 		 printHFT(HL->right);
+			
+	// 	}
+
+	// }
+ // 	printHFT(HFT);
+
+printf("字符  编码	\n");
+	for(int i = 0;i<n;i++)
+	{
+		printf("%-6c",Str[i].C);
+		printL(Str[i].Code);
+		printf("\n");
 	}
-	printHFT(HFT);
+	char S1[STRINGLENGTH];
+	printf("请输入仅包含上面显示字符 的字符串：\n");
+	scanf("%s",S1);
+	printf("字符串：%s\n编码：",S1);
+for(int i = 0;i<strlen(S1);i++)
+{
+	for(int j = 0;j<n;j++)
+	{	if(S1[i] == Str[j].C)
+			
+			printL(Str[j].Code);
+	}
+
+}
+printf("\n");
+
 }
 
  

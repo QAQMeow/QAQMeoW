@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"Tree.h"
-
+//解除下列注释后再编译
 int main()
 {
 	// printf("前序建立二叉树:\n");
@@ -21,6 +21,7 @@ int main()
 	// printf("\n");
 	// printf("层序遍历输出2(利用队列):\n");
 	// PrintTree_c(T);
-	HuffmanTree();
+	// printf("HuffmanTree:\n");
+	// HuffmanTree();
 	return 0;
 }
