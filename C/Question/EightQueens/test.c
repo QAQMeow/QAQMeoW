@@ -1,15 +1,14 @@
 #include<stdio.h>
 #include"E_Queens.h"
 #include<stdlib.h>
+
 int main()
 {
 	Cb c = InitTree();
+	Cb b = c;
+
+ 	 CreatTree(c);
+	 printf("%d",PrintTree(c));
 	
-	for(int i =0;i<3;i++)
-	AddSon(c);
-	//PrintResult(c);
-	CreatTree(c);
-	PrintTree(c);
-	//printf("■ □  ");
 	return 0;
 }
