@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"E_Queens.h"
-#define Queens 8 // 数组行列大小
+#define Queens 8// 数组行列大小
 
 //根节点
 // 根节点数组元素全为0 可以自己赋值0 ，C语言不赋值默认为0
@@ -139,13 +139,7 @@ void CreatTree(Cb C)
 2.每列元素和 == 1
 3. 两条斜对角线和 ==2
 */
-int CountOne(int (*A)[Queens],int n)
-{
-
-
-	int r = 0;
-	
-	int Fun1(int A[Queens][Queens],int i,int j)
+int Fun1(int A[Queens][Queens],int i,int j)
 	{
 		int la =i;
 		int lb =i;
@@ -174,53 +168,66 @@ int CountOne(int (*A)[Queens],int n)
 		int ra =j;
 		int rb =j;
 		int n = 0;
-		while(la>=0 && ra<Queens-1)
+		while(la>=0 && ra<Queens)
 		{
 			n+= A[la][ra];
 			la--;
 			ra++;
 		}	
-		while(lb<Queens-1 && rb>=0)
+		while(lb<Queens-1 && rb>0)
 		{
-			n+= A[lb][rb];
+			
 			lb++;
 			rb--;
+			n+= A[lb][rb];
 			
 			
 		}
-		return n-A[i][j];	
+		return n;	
 	}
-//--------------------------------------------------
+int CountOne(int (*A)[Queens],int n)
+{
 
+
+	int r = 0;
+	
+	
+//--------------------------------------------------
+		
 	for (int i = 0; i < n; ++i)
 	{
 		int k = 0;
-		int x0 = 0; 
-		int x1 = 0; //x0,x1为两条对角线之和 
-
+	
+		int x0 ; 
+		int x1 ; //x0,x1为两条对角线之和 
 		for (int j = 0; j < n; ++j)
 		{
 				
 				k+= A[j][i];//列之和
-			   
-			    	x0 = Fun1(A,i,j);
-			    	x1 = Fun2(A,i,j);
-			    	if(x0==1&&x1==1)
-			    		r+= A[i][j];
-			  
+				
+			   		
+			    	
+			    if(A[i][j]==1){
+			    		x0= Fun1(A,i,j);
+			    		x1= Fun2(A,i,j);
+			    		if(x1+x0!=2)
+			    			return r;
+							
+			    	}	
+			    	r+= A[i][j];
+			  		
 			    //r+= A[i][j];
 			 
 		}
 		
-
 		if(k!=1)
-			
 			return r;
-			
+		
 			//	printf("%d %d\n",x0,x1);
   		//printf("%d %d\n",x0,x1);
 	}
-		
+	
+	
 		return r;
 }
 
