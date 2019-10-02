@@ -2,7 +2,7 @@
 //邻接矩阵
 #define N 100
 typedef int DataType;
-
+////
 typedef struct 
 {	
 	DataType data[N]; // 顶点
