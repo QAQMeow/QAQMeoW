@@ -105,20 +105,184 @@ GRAPH InitGraph()
 //判断图是否有边<x,y>,或（x,y）
 void Adjanvent(GRAPH G,int x,int y)
 {
-
+	int x1 = -1;
+	int y1 = -1;
+	for (int i = 0; i < G.vexnum; ++i)		//
+	{
+		if(x == G.data[i])
+			x1 = i;
+	}
+	if (x1==-1)
+	{
+		printf("不存在\n");
+		return;
+	}
+	else
+		{	if(G.Array[x1][y1] != 0)
+			{	
+				if(G.type == 1)
+					printf("存在 <%d , %d> \n",x,y);
+				else
+					printf("存在 (%d , %d)\n",x,y);
+				return;
+			}
+			else if(G.Array[x1][y1] == 0)
+			{	if(G.type == 0)
+				{
+					if(G.Array[y1][x1] != 0)
+						printf("存在 (%d , %d)\n",x,y);
+					else
+					printf("不存在\n");
+					return;
+				}
+				else
+					printf("不存在\n");
+				return;
+			}
+		}
 }
 
 //列出图中与节点x邻接的边
-void Neighbors(GRAPH G,int x){}
+void Neighbors(GRAPH G,int x)
+{
+	int x1;
+	for (int i = 0; i < G.vexnum; ++i)		//
+	{
+		if(x == G.data[i])
+			x1 = i;
+	}
+	printf("%d 的领边有：\n",	x);
+	
+	for (int j = 0; j < G.vexnum; ++j)
+		{
+			if(G.Array[j][x1] != 0)
+				printf("%d ",G.data[j]);
 
-//在图中插入顶点x
-void InsertVertex(GRAPH G,int x){}
+		}
+
+	for (int i = 0; i < G.vexnum; ++i)
+	{
+			if(G.Array[x1][i] != 0)
+				printf("%d ",G.data[i]);
+	
+	}
+	printf("\n");
+}
+
+//在图中插入顶点x, y 为与新节点x相连的旧节点
+void InsertVertex(GR G,int x,int y) 
+{//只加一条边了，之后再写增加多条边 0_0
+	
+	
+	int z = G->vexnum;
+	G->data[z] = x;
+		G->vexnum+=1;
+	if(G->type)
+	{
+
+		for (int i = 0; i < G->vexnum; ++i)		//
+		{
+			if(y == G->data[i])
+				{
+					G->Array[i][z] = 1;
+					return;
+				}
+		}
+		
+
+	}
+	else
+	{
+		
+		for (int i = 0; i < G->vexnum; ++i)		//
+		{
+			if(y == G->data[i])
+			{
+				G->Array[i][z] = 1;
+				return;
+			}
+
+		}
+
+	
+	}
+
+
+
+}
 
 //从图中删除顶点x
-void DeleteVertex(GRAPH G,int x){}
+void DeleteVertex(GR G,int x)
+{
+	int x1;
+	for (int i = 0; i < G->vexnum; ++i)		//
+	{
+		if(x == G->data[i])
+		{
+			G->data[i] = 0;
+			x1 = i;
+		}
+	}
+
+for (int i = x1; i < G->vexnum; ++i)
+{
+	int t;
+	t = G->data[i];
+	G->data[i] = G->data[i+1];
+	G->data[i+1] = t;
+}
+	for (int j = 0; j < G->vexnum; ++j)
+		{
+			if(G->Array[j][x1] != 0)
+				G->Array[j][x1] = 0;
+
+		}
+
+	for (int i = 0; i < G->vexnum; ++i)
+	{
+			if(G->Array[x1][i] != 0)
+				G->Array[x1][i] = 0;
+	
+	}
+	G->vexnum--;
+}
 
 //若边(x,y)或<x,y>不存在，则添加该边
-void AddEdge(GRAPH G,int x,int y){}
+void AddEdge(GR G,int X,int Y)
+{
+	int x1 =-1;
+	int y1 =-1;
+	int func(GR G,int x,int y)
+	{
+		
+		for (int i = 0; i < G->vexnum; ++i)		//
+		{
+			if(x == G->data[i])
+				x1 = i;
+			if (y == G->data[i])
+				y1 = i;
+		}
+
+		if(x1!=-1&&y1!=-1)
+			return 1;
+		else
+			return 0;
+
+		
+	}
+
+	int T = func(G,X,Y);
+	
+	if(T==0)
+	{
+		if(x1==-1&&y1!=-1)
+			InsertVertex(G ,X,Y);
+		else if((x1!=-1&&y1==-1))
+			InsertVertex(G ,Y,X);
+		else if((x1==-1&&y1==-1))
+			printf("无\n");
+	}
+}
 
 //求图中顶点x的第一个邻接点
 void FirstNeighbor(GRAPH G,int x){}
@@ -131,3 +295,25 @@ void Get_edge_weight(GRAPH G,int x,int y){}
 
 //设置边(x,y)或<x,y>的权值为w
 void Set_edge_wight(GRAPH G,int x,int y,int w){}
+
+void PrintG(GRAPH G)
+{
+	if(G.type)
+	{
+		printf("有向图G节点有：\n");
+		for (int i = 0; i < G.vexnum; ++i)
+		{
+			printf("%d ", G.data[i]);
+		}
+		printf("\n");
+	}
+	else
+	{
+		printf("无向图G节点有：\n");
+		for (int i = 0; i < G.vexnum; ++i)
+		{
+			printf("%d ", G.data[i]);
+		}
+		printf("\n");
+	}
+}

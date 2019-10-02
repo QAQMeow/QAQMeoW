@@ -12,6 +12,7 @@ typedef struct
 	int type;
 }GRAPH;
 
+typedef  GRAPH* GR;
 //初始图
 GRAPH InitGraph();
 //测试图 
@@ -26,13 +27,13 @@ void Adjanvent(GRAPH G,int x,int y);
 void Neighbors(GRAPH G,int x);
 
 //在图中插入顶点x
-void InsertVertex(GRAPH G,int x);
+void InsertVertex(GR G,int x,int y);
 
 //从图中删除顶点x
-void DeleteVertex(GRAPH G,int x);
+void DeleteVertex(GR G,int x);
 
 //若边(x,y)或<x,y>不存在，则添加该边
-void AddEdge(GRAPH G,int x,int y);
+void AddEdge(GR G,int x,int y);
 
 //求图中顶点x的第一个邻接点
 void FirstNeighbor(GRAPH G,int x);
@@ -45,3 +46,8 @@ void Get_edge_weight(GRAPH G,int x,int y);
 
 //设置边(x,y)或<x,y>的权值为w
 void Set_edge_wight(GRAPH G,int x,int y,int w);
+
+
+//输出节点
+
+void PrintG(GRAPH G);
