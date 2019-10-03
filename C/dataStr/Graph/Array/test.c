@@ -4,7 +4,7 @@
 
 int main()
 {
-	GRAPH G = InitTest(0);
+	GRAPH G = InitTest(1);
 	//printf("%d ",G.type);
 	PrintG(G);
 	printf("2 与 0 是否存在边 \n");
@@ -20,10 +20,15 @@ int main()
 	PrintG(G);
 	printf("2 与 5 是否存在边 \n");
 	Adjanvent(G,2,5);
-	printf("增加边1 - 7\n");
-	AddEdge(&G,1,7);
+	printf("增加边 6 - 7\n");
+	AddEdge(&G,6,7);
 	PrintG(G);
-	Adjanvent(G,1,7);
-
+	Adjanvent(G,6,7);
+	printf("获得 6 - 7 的权值\n");
+	printf("%d \n",Get_edge_weight(G,6,7));
+	printf("更改 6 - 7 的权值\n");
+	Set_edge_wight(&G,6,7,2);
+	printf("获得 6 - 7 的权值\n");
+	printf("%d \n",Get_edge_weight(G,6,7));
 	return 0;
 }

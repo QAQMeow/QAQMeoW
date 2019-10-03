@@ -2,7 +2,7 @@
 //邻接矩阵
 #define N 100
 typedef int DataType;
-////
+
 typedef struct 
 {	
 	DataType data[N]; // 顶点
@@ -42,10 +42,10 @@ void FirstNeighbor(GRAPH G,int x);
 void NextNeighbor(GRAPH G,int x,int y);
 
 //获取边(x,y)或<x,y>的权值
-void Get_edge_weight(GRAPH G,int x,int y); 
+int Get_edge_weight(GRAPH G,int x,int y); 
 
 //设置边(x,y)或<x,y>的权值为w
-void Set_edge_wight(GRAPH G,int x,int y,int w);
+void Set_edge_wight(GR G,int x,int y,int w);
 
 
 //输出节点

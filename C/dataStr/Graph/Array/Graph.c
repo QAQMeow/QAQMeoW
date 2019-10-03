@@ -111,8 +111,10 @@ void Adjanvent(GRAPH G,int x,int y)
 	{
 		if(x == G.data[i])
 			x1 = i;
+		if(y == G.data[i])
+			y1 = i;
 	}
-	if (x1==-1)
+	if (x1==-1||y1 == -1)
 	{
 		printf("不存在\n");
 		return;
@@ -280,21 +282,52 @@ void AddEdge(GR G,int X,int Y)
 		else if((x1!=-1&&y1==-1))
 			InsertVertex(G ,Y,X);
 		else if((x1==-1&&y1==-1))
-			printf("无\n");
+		{
+			G->data[G->vexnum] = X;
+			G->data[G->vexnum+1] = Y;
+			G->vexnum+=2;
+			G->Array[G->vexnum-2][G->vexnum-1] = 1;
+		}
 	}
 }
 
 //求图中顶点x的第一个邻接点
-void FirstNeighbor(GRAPH G,int x){}
+void FirstNeighbor(GRAPH G,int x)
+{}
 
 //求除y外顶点x的下一个邻接点
 void NextNeighbor(GRAPH G,int x,int y){}
 
 //获取边(x,y)或<x,y>的权值
-void Get_edge_weight(GRAPH G,int x,int y){} 
+int Get_edge_weight(GRAPH G,int x,int y)
+{
+	int x1 = -1;
+	int y1 = -1;
+	for (int i = 0; i < G.vexnum; ++i)	
+	{
+		if(x == G.data[i])
+			x1 = i;
+		if(y == G.data[i])
+			y1 = i;
+	}
+	return G.Array[x1][y1];
+
+} 
 
 //设置边(x,y)或<x,y>的权值为w
-void Set_edge_wight(GRAPH G,int x,int y,int w){}
+void Set_edge_wight(GR G,int x,int y,int w)
+{
+	int x1 = -1;
+	int y1 = -1;
+	for (int i = 0; i < G->vexnum; ++i)	
+	{
+		if(x == G->data[i])
+			x1 = i;
+		if(y == G->data[i])
+			y1 = i;
+	}
+	G->Array[x1][y1] = w;
+}
 
 void PrintG(GRAPH G)
 {
