@@ -2,33 +2,39 @@
 
 
 //直接插入排序
-void DirectInsertionSort(int ARRAY[]);
+int* DirectInsertionSort(int ARRAY[]);
 
 //折半插入排序
-void BinaryInsertionSort(int ARRAY[]);
+int* BinaryInsertionSort(int ARRAY[]);
 
 //希尔排序
-void ShellSort(int ARRAY[]);
+int* ShellSort(int ARRAY[]);
 
 //冒泡排序
-void BubbleSort(int ARRAY[]);
+int* BubbleSort(int ARRAY[]);
 
 //快速排序
-void QuickSort(int ARRAY[]);
+int* QuickSort(int ARRAY[]);
 
 //简单选择排序
-void SimpleSelectionSort(int ARRAY[]);
+int* SimpleSelectionSort(int ARRAY[]);
 
 //堆排序
-void HeapSort(int ARRAY[]);
+int* HeapSort(int ARRAY[]);
 
 //归并排序
-void MergeSort(int ARRAY[]);
+int* MergeSort(int ARRAY[]);
 
 //基数排序
-void RadixSort(int ARRAY[]);
+int* RadixSort(int ARRAY[]);
 
 //输出数组
 void PrintArray(int ARRAY[]);
 
 void P();
+
+//顺序查找
+void Sortsearch(int ARRAY[],int x);
+
+//折半查找
+int BinarySeaerch(int ARRAY[],int l,int x);

@@ -1,19 +1,17 @@
 #include<stdio.h>
 #include"SortAndSearch.h"
-
+#include<stdlib.h>
 int A[20] = {10,3,11,7,19,1,6,14,5,18,9,15,2,12,16,13,4,17,8,20};
 int LEN =  sizeof(A)/sizeof(int);	
 
-//输出数组
-void PrintArray(int ARRAY[]);
 
 //直接插入排序
 /*
 初始假设第一个元素(下标0)是已排好序列，从下标(i = 1)开始，与已排好的序列依次(从j = 0开始)比较，若比排好的序列中的j元素小，则已排好的序列从j往后顺移一位，将i元素插入j位置
 */
-void DirectInsertionSort(int ARRAY[])
+int*  DirectInsertionSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
@@ -38,36 +36,37 @@ void DirectInsertionSort(int ARRAY[])
 		
 		}
 	}		
-
-		PrintArray(B);
+	return B;
+	
 }
 
 //折半插入排序
 /*
 
 */
-void BinaryInsertionSort(int ARRAY[])
+int* BinaryInsertionSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
+	return B;
 }
 
 //希尔排序
 /*
 
 */
-void ShellSort(int ARRAY[])
+int* ShellSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
 
-	PrintArray(B);
+	return B;
 
 }
 
@@ -76,9 +75,9 @@ void ShellSort(int ARRAY[])
 排序为从小到达
 每次都从下标j=0开始，每排序一次，最大值都排到最后一位，下次需要排序的个数-1
 */
-void BubbleSort(int ARRAY[])
+int* BubbleSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
@@ -97,16 +96,16 @@ void BubbleSort(int ARRAY[])
 			}
 		}
 	}
-	PrintArray(B);
+	return B;
 }
 
 //快速排序
 /*
 选取第一个为参考值，将序列分为比该值小和比该值大两序列，再对这两序列进行同样的操作
 */
-void QuickSort(int ARRAY[])
+int* QuickSort(int ARRAY[])
 { 	
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
@@ -148,16 +147,16 @@ void QuickSort(int ARRAY[])
 
 	sort(left,right,B[0]);
 	
-	PrintArray(B);
+	return B;
 }
 
 //简单选择排序
 /*
 
 */
-void SimpleSelectionSort(int ARRAY[])
+int* SimpleSelectionSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
@@ -173,31 +172,31 @@ void SimpleSelectionSort(int ARRAY[])
 				B[j] = B[i];
 				B[i] = t;
 			}
-		}
+		}	
 	}
-	PrintArray(B);
+	return B;
 }
 
 //堆排序
-void HeapSort(int ARRAY[])
+int* HeapSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 }
 
 //归并排序
-void MergeSort(int ARRAY[])
+int* MergeSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 }
 
 //基数排序
-void RadixSort(int ARRAY[])
+int* RadixSort(int ARRAY[])
 {
-	int B[LEN];
+	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
 
