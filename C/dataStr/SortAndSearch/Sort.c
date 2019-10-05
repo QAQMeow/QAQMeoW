@@ -42,15 +42,38 @@ int*  DirectInsertionSort(int ARRAY[])
 
 //折半插入排序
 /*
-
+先折半查找位置再移动
 */
 int* BinaryInsertionSort(int ARRAY[])
 {
-	int* B = (int*)malloc(LEN*sizeof(int));
-	for(int i = 0;i < LEN;i++)
-	B[i] = A[i];
+	int* B = (int*)malloc((LEN+1)*sizeof(int));
+	for(int i = 1;i <=LEN;i++)
+	B[i] = A[i-1];
+	
+	int i,j,high,low;
 
-	return B;
+	for(i=2;i<(LEN+1);i++)
+	{
+		B[0] = B[i];
+		low = 1;
+		high = i-1;
+		while(low<=high)
+		{
+			int mid = (low+high)/2;
+			if(B[mid]>B[0])
+				high = mid -1;
+			else
+				low = mid+1;
+
+		}
+		for (j = i-1;j>=high+1;--j)
+		{
+			B[j+1] = B[j];
+		}
+		B[high+1] = B[0];
+	}
+
+	return B+1;
 }
 
 //希尔排序
