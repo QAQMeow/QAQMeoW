@@ -47,6 +47,7 @@ int*  DirectInsertionSort(int ARRAY[])
 int* BinaryInsertionSort(int ARRAY[])
 {
 	int* B = (int*)malloc((LEN+1)*sizeof(int));
+		B[0] = -1;
 	for(int i = 1;i <=LEN;i++)
 	B[i] = A[i-1];
 	
@@ -82,14 +83,28 @@ int* BinaryInsertionSort(int ARRAY[])
 */
 int* ShellSort(int ARRAY[])
 {
-	int* B = (int*)malloc(LEN*sizeof(int));
-	for(int i = 0;i < LEN;i++)
-	B[i] = A[i];
-	for(int i = 0;i < LEN;i++)
-	B[i] = A[i];
+	int* B = (int*)malloc((LEN+1)*sizeof(int));
+	B[0] = -1;
+	for(int i = 1;i <= LEN;i++)
+	B[i] = A[i-1];
+	int d;
+	for (d = LEN/2; d>=1 ; d=d/2)
+	{
+		for (int i = d+1; i < LEN; ++i)
+		{
+			if(B[i]<B[i-d])
+			{ int j;	
+				B[0] = B[i];
+				for (j = i-d; j >0&&B[0]<B[j];j-=d)
+				{
+					B[j+d] = B[j];
+				}
+				B[j+d] = B[0];
+			}
+		}
+	}
 
-
-	return B;
+	return B+1;
 
 }
 

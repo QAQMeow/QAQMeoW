@@ -16,6 +16,8 @@ int main()
 	PrintArray(SimpleSelectionSort(A));
 	printf("折半插入排序\n");
 	PrintArray(BinaryInsertionSort(A));
+	printf("希尔排序\n");
+	PrintArray(ShellSort(A));
 	printf("顺序查找\n");
 	Sortsearch(A,15);
 	int*B = SimpleSelectionSort(A);
