@@ -18,6 +18,12 @@ int main()
 	PrintArray(BinaryInsertionSort(A));
 	printf("希尔排序\n");
 	PrintArray(ShellSort(A));
+	printf("堆排序\n");
+	PrintArray(MergeSort(A));
+	printf("归并排序\n");
+	PrintArray(HeapSort(A));
+	printf("基数排序\n");
+	PrintArray(RadixSort(A));
 	printf("顺序查找\n");
 	Sortsearch(A,15);
 	int*B = SimpleSelectionSort(A);

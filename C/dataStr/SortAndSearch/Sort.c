@@ -221,6 +221,46 @@ int* HeapSort(int ARRAY[])
 	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
+
+	 
+	void swap(int* a, int* b)
+	{
+	    int temp = *b;
+	    *b = *a;
+	    *a = temp;
+	}
+	void max_heapify(int arr[], int start, int end) 
+	{
+	    //建立父节点指标和子节点指标
+	    int dad = start;
+	    int son = dad * 2 + 1;
+	    while (son <= end)  //若子节点指标在范围内才做比较
+	        {
+	            if (son + 1 <= end && arr[son] < arr[son + 1]) 
+	            //先比较两个子节点大小，选择最大的
+	            son++;
+	        if (arr[dad] > arr[son]) //如果父节点大於子节点代表调整完毕，直接跳出函数
+	            return;
+	        else  //否则交换父子内容再继续子节点和孙节点比较
+	        {
+	            swap(&arr[dad], &arr[son]);
+	            dad = son;
+	            son = dad * 2 + 1;
+	        }
+	    }
+	}
+	int i;
+    //初始化，i从最後一个父节点开始调整
+    for (i = LEN / 2 - 1; i >= 0; i--)
+        max_heapify(B, i, LEN - 1);
+    //先将第一个元素和已排好元素前一位做交换，再重新调整，直到排序完毕
+    for (i = LEN - 1; i > 0; i--) 
+    {
+        swap(&B[0], &B[i]);
+        max_heapify(B, 0, i - 1);
+    }
+
+    return B;
 }
 
 //归并排序
@@ -229,15 +269,119 @@ int* MergeSort(int ARRAY[])
 	int* B = (int*)malloc(LEN*sizeof(int));
 	for(int i = 0;i < LEN;i++)
 	B[i] = A[i];
+
+	void Merge(int sourceArr[],int tempArr[], int startIndex, int midIndex, int endIndex)
+	{
+	    int i = startIndex, j=midIndex+1, k = startIndex;
+	    while(i!=midIndex+1 && j!=endIndex+1)
+	    {
+	        if(sourceArr[i] > sourceArr[j])
+	            tempArr[k++] = sourceArr[j++];
+	        else
+	            tempArr[k++] = sourceArr[i++];
+	    }
+	    while(i != midIndex+1)
+	        tempArr[k++] = sourceArr[i++];
+	    while(j != endIndex+1)
+	        tempArr[k++] = sourceArr[j++];
+	    for(i=startIndex; i<=endIndex; i++)
+	        sourceArr[i] = tempArr[i];
+	}
+
+	void MergeSort(int sourceArr[], int tempArr[], int startIndex, int endIndex)
+	{
+	    int midIndex;
+	    if(startIndex < endIndex)
+	    {
+	        midIndex = startIndex + (endIndex-startIndex) / 2;
+	        MergeSort(sourceArr, tempArr, startIndex, midIndex);
+	        MergeSort(sourceArr, tempArr, midIndex+1, endIndex);
+	        Merge(sourceArr, tempArr, startIndex, midIndex, endIndex);
+	    }
+	}
+	int C[LEN];
+	MergeSort(B, C, 0, 19);
+	return B;
+	
 }
 
 //基数排序
+
 int* RadixSort(int ARRAY[])
 {
 	int* B = (int*)malloc(LEN*sizeof(int));
-	for(int i = 0;i < LEN;i++)
-	B[i] = A[i];
+	// for(int i = 0;i < LEN;i++)
+	// B[i] = A[i];
+	typedef struct C
+	{
+		int data;
+		int p;
+		int r;
+	}C;
 
+	C Ca[LEN];	
+	for (int i = 0; i < LEN; ++i)
+	{
+		Ca[i].data = A[i];
+		Ca[i].p  = i;
+		Ca[i].r =A[i]%10;
+	}
+	
+	for(int i = 0;i < LEN-1;i++)
+	{
+		for(int j = 0;j < LEN-i-1;j++)       //注意 j< LEN-1-i
+		{
+			
+			if(Ca[j].r > Ca[j+1].r)
+			{
+				int t,k,l;
+				t =Ca[j].data;
+				k = Ca[j].p;
+				l = Ca[j].r;
+
+				Ca[j].data = Ca[j+1].data;
+				Ca[j].p  =Ca[j+1].p;
+				Ca[j].r = Ca[j+1].r;
+
+				Ca[j+1].data = t;
+				Ca[j+1].p  = k;
+				Ca[j+1].r = l;
+			}
+		}
+	}
+
+for (int i = 0; i < LEN; ++i)
+	{
+		Ca[i].r =Ca[i].data/10;
+	}
+for(int i = 0;i < LEN-1;i++)
+	{
+		for(int j = 0;j < LEN-i-1;j++)       //注意 j< LEN-1-i
+		{
+			
+			if(Ca[j].r > Ca[j+1].r)
+			{
+				int t,k,l;
+				t =Ca[j].data;
+				k = Ca[j].p;
+				l = Ca[j].r;
+
+				Ca[j].data = Ca[j+1].data;
+				Ca[j].p  =Ca[j+1].p;
+				Ca[j].r = Ca[j+1].r;
+
+				Ca[j+1].data = t;
+				Ca[j+1].p  = k;
+				Ca[j+1].r = l;
+			}
+		}
+	}
+
+	for (int i = 0; i < LEN; ++i)
+	{
+		B[i] = Ca[i].data;
+	}
+	return B;
 }
 
 //输出数组
