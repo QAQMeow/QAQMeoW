@@ -1,8 +1,8 @@
 #include<iostream>
-
+#include"List.h"
 int main()
 {
 	using namespace std;
-		cout << "Hello World!";
+	sqlists List = InitList();
 	return 0;
 }
