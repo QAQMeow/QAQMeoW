@@ -1,0 +1,2 @@
+E:\GitHub\QAQMeow\CPP\LintCode\NarcissisticNumber\Debug\NarcissisticNumber.exe
+E:\GitHub\QAQMeow\CPP\LintCode\NarcissisticNumber\Debug\NarcissisticNumber.pdb

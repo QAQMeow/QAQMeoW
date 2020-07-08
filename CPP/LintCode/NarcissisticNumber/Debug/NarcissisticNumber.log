@@ -1,0 +1,6 @@
+﻿  main.cpp
+E:\GitHub\QAQMeow\CPP\LintCode\NarcissisticNumber\main.cpp(13,1): error C2601: “R”: 本地函数定义是非法的
+E:\GitHub\QAQMeow\CPP\LintCode\NarcissisticNumber\main.cpp(14,13): error C2065: “reuturn”: 未声明的标识符
+E:\GitHub\QAQMeow\CPP\LintCode\NarcissisticNumber\main.cpp(14,21): error C2146: 语法错误: 缺少“;”(在标识符“Num”的前面)
+E:\GitHub\QAQMeow\CPP\LintCode\NarcissisticNumber\main.cpp(14,21): error C2065: “Num”: 未声明的标识符
+E:\GitHub\QAQMeow\CPP\LintCode\NarcissisticNumber\main.cpp(25,23): warning C4018: “<”: 有符号/无符号不匹配

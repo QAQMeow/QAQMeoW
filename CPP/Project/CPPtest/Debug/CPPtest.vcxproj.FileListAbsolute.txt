@@ -1,0 +1,2 @@
+E:\GitHub\QAQMeow\CPP\Project\CPPtest\Debug\CPPtest.exe
+E:\GitHub\QAQMeow\CPP\Project\CPPtest\Debug\CPPtest.pdb
