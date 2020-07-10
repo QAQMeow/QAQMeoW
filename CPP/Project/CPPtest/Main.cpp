@@ -1,20 +1,18 @@
 #include<iostream>
 #include<cstring>
 #include<vector>
-
+#include"test.h"
 using namespace std;
 
-namespace Fzh
-{
-	double fzh = 1.1;
-}
-double fzh = 1.2;
+
 int main()
 {	
-	using namespace Fzh;
-	Fzh::fzh = 11.2;
-	cout << ::fzh;
-	cout << '\n' << Fzh::fzh;
+	Stock s1 = Stock("S1",2,3.0);
+	Stock s2 = Stock("S2",4,0.5);
+	s1.show();
+	s2.show();
+	Stock Topval =  s1.topval(s2);
+	Topval.show();
 	return 0;
 
 }
