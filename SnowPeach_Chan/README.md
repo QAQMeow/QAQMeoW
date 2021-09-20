@@ -1,8 +1,4 @@
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0de3f8bb5dd769e69c7da4f68ed7ce0dac56ae33
 2021.5.17更新
 ===
 
@@ -42,6 +38,11 @@ _——新增弹幕时间分布
 ==
 拜拜
 
+2021.9.20
+==
+添加了可用记事本打开的py文件</br>
+StopWords_HIT 273
+
 
 参考
 =
@@ -50,7 +51,6 @@ https://github.com/Passkou/bilibili_api </br>
 https://www.zhihu.com/question/381784377/answer/1099438784  </br>
 概率论与数理统计：第九版 Probability and  Statistics for Engineers ,Ninth Edition: / (美)理查德·A·约翰逊(Richard A.Johson)著.--北京：电子工业出版社，2017.8 ISBN 978-7-121-31971-6 </br>
 中国传统色：故宫里的色彩美学 / 郭浩，李健明著.--北京：中信出版社，2020.10（2021.2重印）ISBN 978-7-5217-1605-4
-<<<<<<< HEAD
-=======
 
->>>>>>> 0de3f8bb5dd769e69c7da4f68ed7ce0dac56ae33
+
+
